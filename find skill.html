@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Skills - Skill Connect Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .find-skills-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .find-skills-container h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #667eea;
+        }
+
+        .search-filter-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            font-size: 1em;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-btn {
+            padding: 12px 30px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background-color: #5568d3;
+        }
+
+        .filter-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .filter-section h3 {
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.95em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .reset-btn:hover {
+            background-color: #ee5a52;
+        }
+
+        .skills-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .skill-card h4 {
+            font-size: 1.4em;
+            color: #667eea;
+        }
+
+        .skill-category {
+            display: inline-block;
+            background-color: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .skill-level {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #333;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-description {
+            color: #666;
+            font-size: 0.95em;
+            margin: 15px 0;
+        }
+
+        .skill-rating {
+            font-size: 1.1em;
+            color: #ffc107;
+            margin: 10px 0;
+        }
+
+        .skill-teacher {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .teacher-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .teacher-info {
+            flex: 1;
+        }
+
+        .teacher-name {
+            font-weight: 600;
+        }
+
+        .teacher-rating {
+            font-size: 0.85em;
+            color: #ffc107;
+            margin-top: 3px;
+        }
+
+        .skill-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .skill-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .request-btn {
+            background-color: #667eea;
+            color: white;
+        }
+
+        .request-btn:hover {
+            background-color: #5568d3;
+        }
+
+        .view-btn {
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd !important;
+        }
+
+        .view-btn:hover {
+            background-color: #e8e8e8;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            color: #999;
+        }
+
+        .no-results p {
+            font-size: 1.2em;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .find-skills-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    </header>
+
+    <main>
+        <section class="find-skills-container">
+
+            <h2>Find Skills to Learn</h2>
+
+            <div class="search-filter-section">
+
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search skills (e.g., Python, Guitar, Cooking)"
+                        class="search-input"
+                    >
+
+                    <button id="searchBtn" class="search-btn">
+                        Search
+                    </button>
+                </div>
+
+                <div class="filter-section">
+
+                    <h3>Filters</h3>
+
+                    <div class="filter-group">
+                        <label>Category:</label>
+
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="programming">Programming</option>
+                            <option value="languages">Languages</option>
+                            <option value="music">Music</option>
+                            <option value="arts">Arts & Crafts</option>
+                            <option value="fitness">Fitness & Sports</option>
+                            <option value="cooking">Cooking</option>
+                            <option value="business">Business</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Level:</label>
+
+                        <select id="levelFilter" class="filter-select">
+                            <option value="">All Levels</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Rating:</label>
+
+                        <select id="ratingFilter" class="filter-select">
+                            <option value="">All Ratings</option>
+                            <option value="4.5">4.5 stars & up</option>
+                            <option value="4">4 stars & up</option>
+                            <option value="3">3 stars & up</option>
+                        </select>
+                    </div>
+
+                    <button id="resetFilters" class="reset-btn">
+                        Reset Filters
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="skills-section">
+
+                <h3>
+                    Available Skills (<span id="skillCount">0</span>)
+                </h3>
+
+                <div id="skillsList" class="skills-grid"></div>
+
+                <div id="noResults" class="no-results" style="display: none;">
+                    <p>
+                        No skills found matching your criteria.
+                        Try adjusting your filters.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>&copy; 2026 Skill Connect. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+
+        const skillsDatabase = [
+            {
+                id: 1,
+                name: "Python Programming",
+                category: "programming",
+                level: "beginner",
+                description: "Learn Python basics including variables, loops, and functions.",
+                teacher: "John Smith",
+                rating: 4.8,
+                reviews: 45,
+                avatar: "JS"
+            },
+            {
+                id: 2,
+                name: "React.js Development",
+                category: "programming",
+                level: "intermediate",
+                description: "Master React components, hooks, and state management.",
+                teacher: "Sarah Johnson",
+                rating: 4.9,
+                reviews: 52,
+                avatar: "SJ"
+            },
+            {
+                id: 3,
+                name: "Spanish Language",
+                category: "languages",
+                level: "beginner",
+                description: "Learn conversational Spanish from scratch.",
+                teacher: "Maria Garcia",
+                rating: 4.7,
+                reviews: 38,
+                avatar: "MG"
+            },
+            {
+                id: 4,
+                name: "Guitar Basics",
+                category: "music",
+                level: "beginner",
+                description: "Learn to play basic guitar chords and simple songs.",
+                teacher: "Mike Wilson",
+                rating: 4.6,
+                reviews: 29,
+                avatar: "MW"
+            },
+            {
+                id: 5,
+                name: "Digital Painting",
+                category: "arts",
+                level: "intermediate",
+                description: "Create stunning digital artwork using Photoshop and Procreate.",
+                teacher: "Emma Davis",
+                rating: 4.8,
+                reviews: 41,
+                avatar: "ED"
+            },
+            {
+                id: 6,
+                name: "Yoga & Meditation",
+                category: "fitness",
+                level: "beginner",
+                description: "Improve flexibility, strength, and mental peace.",
+                teacher: "Alex Chen",
+                rating: 4.9,
+                reviews: 67,
+                avatar: "AC"
+            },
+            {
+                id: 7,
+                name: "Italian Cooking",
+                category: "cooking",
+                level: "intermediate",
+                description: "Master authentic Italian recipes and cooking techniques.",
+                teacher: "Marco Rossi",
+                rating: 4.7,
+                reviews: 35,
+                avatar: "MR"
+            },
+            {
+                id: 8,
+                name: "Digital Marketing",
+                category: "business",
+                level: "intermediate",
+                description: "Learn social media marketing, SEO, and content strategy.",
+                teacher: "Lisa Anderson",
+                rating: 4.8,
+                reviews: 48,
+                avatar: "LA"
+            },
+            {
+                id: 9,
+                name: "JavaScript Advanced",
+                category: "programming",
+                level: "advanced",
+                description: "Deep dive into ES6+, async/await, and advanced patterns.",
+                teacher: "David Brown",
+                rating: 4.9,
+                reviews: 56,
+                avatar: "DB"
+            },
+            {
+                id: 10,
+                name: "Mandarin Chinese",
+                category: "languages",
+                level: "intermediate",
+                description: "Learn Mandarin writing, speaking, and cultural context.",
+                teacher: "Lily Wang",
+                rating: 4.8,
+                reviews: 42,
+                avatar: "LW"
+            },
+            {
+                id: 11,
+                name: "Photography Basics",
+                category: "arts",
+                level: "beginner",
+                description: "Master composition, lighting, and camera settings.",
+                teacher: "Tom Parker",
+                rating: 4.7,
+                reviews: 33,
+                avatar: "TP"
+            },
+            {
+                id: 12,
+                name: "Fitness Training",
+                category: "fitness",
+                level: "intermediate",
+                description: "Personalized workout plans and fitness coaching.",
+                teacher: "Rachel Green",
+                rating: 4.8,
+                reviews: 50,
+                avatar: "RG"
+            }
+        ];
+
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+        const categoryFilter = document.getElementById("categoryFilter");
+        const levelFilter = document.getElementById("levelFilter");
+        const ratingFilter = document.getElementById("ratingFilter");
+        const resetFilters = document.getElementById("resetFilters");
+        const skillsList = document.getElementById("skillsList");
+        const noResults = document.getElementById("noResults");
+        const skillCount = document.getElementById("skillCount");
+
+        let filteredSkills = [...skillsDatabase];
+
+        document.addEventListener("DOMContentLoaded", function () {
+            displaySkills(filteredSkills);
+        });
+
+        searchBtn.addEventListener("click", handleSearch);
+
+        searchInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                handleSearch();
+            }
+        });
+
+        categoryFilter.addEventListener("change", applyFilters);
+        levelFilter.addEventListener("change", applyFilters);
+        ratingFilter.addEventListener("change", applyFilters);
+
+        resetFilters.addEventListener("click", handleResetFilters);
+
+        function handleSearch() {
+            applyFilters();
+        }
+
+        function applyFilters() {
+
+            const category = categoryFilter.value;
+            const level = levelFilter.value;
+            const rating = ratingFilter.value;
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            filteredSkills = skillsDatabase.filter(function (skill) {
+
+                const categoryMatch =
+                    category === "" || skill.category === category;
+
+                const levelMatch =
+                    level === "" || skill.level === level;
+
+                const ratingMatch =
+                    rating === "" || skill.rating >= parseFloat(rating);
+
+                const searchMatch =
+                    searchTerm === "" ||
+                    skill.name.toLowerCase().includes(searchTerm) ||
+                    skill.description.toLowerCase().includes(searchTerm) ||
+                    skill.teacher.toLowerCase().includes(searchTerm);
+
+                return categoryMatch &&
+                       levelMatch &&
+                       ratingMatch &&
+                       searchMatch;
+            });
+
+            displaySkills(filteredSkills);
+        }
+
+        function handleResetFilters() {
+
+            searchInput.value = "";
+            categoryFilter.value = "";
+            levelFilter.value = "";
+            ratingFilter.value = "";
+
+            filteredSkills = [...skillsDatabase];
+
+            displaySkills(filteredSkills);
+        }
+
+        function displaySkills(skills) {
+
+            skillsList.innerHTML = "";
+
+            skillCount.textContent = skills.length;
+
+            if (skills.length === 0) {
+                noResults.style.display = "block";
+                return;
+            }
+
+            noResults.style.display = "none";
+
+            skills.forEach(function (skill) {
+                const card = createSkillCard(skill);
+                skillsList.appendChild(card);
+            });
+        }
+
+        function createSkillCard(skill) {
+
+            const card = document.createElement("div");
+
+            card.className = "skill-card";
+
+            const levelText =
+                skill.level.charAt(0).toUpperCase() +
+                skill.level.slice(1);
+
+            const stars =
+                "★".repeat(Math.floor(skill.rating)) +
+                "☆".repeat(5 - Math.floor(skill.rating));
+
+            card.innerHTML = `
+                <div class="skill-header">
+                    <h4>${skill.name}</h4>
+                </div>
+
+                <span class="skill-category">
+                    ${skill.category}
+                </span>
+
+                <span class="skill-level">
+                    ${levelText}
+                </span>
+
+                <p class="skill-description">
+                    ${skill.description}
+                </p>
+
+                <div class="skill-rating">
+                    ${stars}
+                    ${skill.rating} (${skill.reviews} reviews)
+                </div>
+
+                <div class="skill-teacher">
+
+                    <div class="teacher-avatar">
+                        ${skill.avatar}
+                    </div>
+
+                    <div class="teacher-info">
+                        <p class="teacher-name">
+                            ${skill.teacher}
+                        </p>
+
+                        <p class="teacher-rating">
+                            ★ ${skill.rating} Rating
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="skill-actions">
+
+                    <button
+                        class="request-btn"
+                        onclick="requestSkill(${skill.id})">
+                        Request Exchange
+                    </button>
+
+                    <button
+                        class="view-btn"
+                        onclick="viewProfile(${skill.id})">
+                        View Profile
+                    </button>
+
+                </div>
+            `;
+
+            return card;
+        }
+
+        function requestSkill(skillId) {
+
+            const skill = skillsDatabase.find(function (skill) {
+                return skill.id === skillId;
+            });
+
+            if (skill) {
+
+                alert(
+                    "Exchange request sent to " +
+                    skill.teacher +
+                    ' for "' +
+                    skill.name +
+                    '"!\n\nYou can chat and schedule sessions from your dashboard.'
+                );
+            }
+        }
+
+        function viewProfile(skillId) {
+
+            const skill = skillsDatabase.find(function (skill) {
+                return skill.id === skillId;
+            });
+
+            if (skill) {
+
+                alert(
+                    "Viewing profile for " +
+                    skill.teacher +
+                    ".\n\nSkill: " +
+                    skill.name +
+                    "\nRating: " +
+                    skill.rating +
+                    "/5\nReviews: " +
+                    skill.reviews
+                );
+            }
+        }
+
+        window.requestSkill = requestSkill;
+        window.viewProfile = viewProfile;
+
+    </script>
+
+</body>
+
+</html>
