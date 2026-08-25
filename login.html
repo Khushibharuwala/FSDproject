@@ -1,123 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skill Connect - Login</title>
+
+    <title>SkillConnect - Login</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, Helvetica, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f5f9;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            background: linear-gradient(135deg, #6C63FF, #5DE0E6);
         }
 
         .login-box {
+            width: 420px;
             background: white;
-            width: 320px;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            text-align: center;
+            padding: 40px 35px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
         }
 
-        h1 {
-            color: #0077cc;
-            margin-bottom: 5px;
+        .login-box:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            color: #6C63FF;
+            margin-bottom: 20px;
+        }
+
+        .logo i {
+            font-size: 34px;
+        }
+
+        .logo h1 {
+            font-size: 30px;
+            font-weight: 700;
         }
 
         h2 {
-            margin-top: 0;
+            text-align: center;
             color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
         }
 
-        p {
-            color: gray;
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
             font-size: 14px;
         }
 
-        input[type="email"],
-        input[type="password"] {
-            width: 95%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        /* Input Box */
+        .input-box {
+            position: relative;
+            margin-bottom: 20px;
         }
 
-        .remember {
-            text-align: left;
-            margin: 10px 0;
-            font-size: 14px;
+        .input-box > i:first-child {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
         }
 
-        input[type="submit"],
-        input[type="reset"] {
-            width: 48%;
-            padding: 10px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #0077cc;
-            color: white;
+        .input-box input {
+            width: 100%;
+            padding: 14px 45px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: #6C63FF;
+            box-shadow: 0 0 8px rgba(108, 99, 255, 0.2);
+        }
+
+        /* Eye Icon */
+        .eye {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
             cursor: pointer;
         }
 
-        input[type="reset"] {
-            background-color: #777;
+        /* Remember Me */
+        .remember {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0 20px;
+            font-size: 14px;
         }
 
-        input[type="submit"]:hover {
-            background-color: #005fa3;
+        .remember label {
+            color: #555;
+            cursor: pointer;
         }
 
-        input[type="reset"]:hover {
-            background-color: #555;
+        .remember input {
+            margin-right: 5px;
+            accent-color: #6C63FF;
         }
 
-        a {
+        .forgot {
+            color: #6C63FF;
             text-decoration: none;
-            color: #0077cc;
+            font-weight: 500;
         }
 
-        a:hover {
+        .forgot:hover {
             text-decoration: underline;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .buttons input {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn {
+            background: #6C63FF;
+            color: white;
+        }
+
+        .login-btn:hover {
+            background: #5848e5;
+        }
+
+        .clear-btn {
+            background: #777;
+            color: white;
+        }
+
+        .clear-btn:hover {
+            background: #555;
+        }
+
+        /* Register */
+        .register {
+            text-align: center;
+            margin-top: 25px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .register a {
+            color: #6C63FF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .login-box {
+                width: 90%;
+                padding: 30px 25px;
+            }
+
+            .logo h1 {
+                font-size: 26px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="login-box">
 
-        <h1>Skill Connect</h1>
+        <!-- Logo -->
+        <div class="logo">
+            <i class="fa-solid fa-users"></i>
+            <h1>SkillConnect</h1>
+        </div>
+
         <h2>Login</h2>
-        <p>Welcome back! Please login to continue.</p>
 
-        <form>
+        <p class="subtitle">
+            Welcome back! Please login to continue.
+        </p>
 
-            <input type="email" placeholder="Enter your email" required><br>
+        <!-- Login Form -->
+        <form id="loginForm">
 
-            <input type="password" placeholder="Enter your password" required><br>
+            <!-- Email -->
+            <div class="input-box">
+                <i class="fa-solid fa-envelope"></i>
 
-            <div class="remember">
-                <input type="checkbox" id="remember">
-                <label for="remember">Remember Me</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required>
             </div>
 
-            <input type="submit" value="Login">
-            <input type="reset" value="Clear">
+            <!-- Password -->
+            <div class="input-box">
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required>
+
+                <i class="fa-solid fa-eye eye"
+                    id="togglePassword"></i>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="remember">
+
+                <label>
+                    <input type="checkbox" id="remember">
+                    Remember Me
+                </label>
+
+                <a href="#" class="forgot">
+                    Forgot Password?
+                </a>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="buttons">
+
+                <input
+                    type="submit"
+                    value="Login"
+                    class="login-btn">
+
+                <input
+                    type="reset"
+                    value="Clear"
+                    class="clear-btn">
+
+            </div>
 
         </form>
 
-        <p><a href="#">Forgot Password?</a></p>
-
-        <p>Don't have an account? <a href="#">Sign Up</a></p>
+        <!-- Register -->
+        <div class="register">
+            Don't have an account?
+            <a href="register.html">Register</a>
+        </div>
 
     </div>
 
+
+    <script>
+
+        // Get elements
+        const loginForm = document.getElementById("loginForm");
+        const password = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+
+        // Show / Hide Password
+        togglePassword.onclick = function () {
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                togglePassword.classList.remove("fa-eye");
+                togglePassword.classList.add("fa-eye-slash");
+
+            } else {
+
+                password.type = "password";
+
+                togglePassword.classList.remove("fa-eye-slash");
+                togglePassword.classList.add("fa-eye");
+            }
+        };
+
+
+        // Login Form
+        loginForm.addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const pass = password.value;
+
+            if (pass.length < 6) {
+
+                alert("Password should be at least 6 characters.");
+                return;
+            }
+
+            alert("Login Successful!");
+
+            console.log("Email:", email);
+
+        });
+
+    </script>
+
 </body>
+
 </html>

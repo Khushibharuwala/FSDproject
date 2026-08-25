@@ -7,6 +7,7 @@
 
     <title>SkillConnect Register</title>
 
+    <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -74,7 +75,7 @@
             margin-bottom: 20px;
         }
 
-        .input-box i:first-child {
+        .input-box > i:first-child {
             position: absolute;
             left: 15px;
             top: 50%;
@@ -160,6 +161,7 @@
 
     <div class="card">
 
+        <!-- Logo -->
         <div class="logo">
             <i class="fa-solid fa-users"></i>
             <h2>SkillConnect</h2>
@@ -169,8 +171,10 @@
 
         <p>Join SkillConnect and start hiring or working.</p>
 
+        <!-- Registration Form -->
         <form id="registerForm">
 
+            <!-- Full Name -->
             <div class="input-box">
                 <i class="fa-solid fa-user"></i>
 
@@ -181,6 +185,7 @@
                     required>
             </div>
 
+            <!-- Email -->
             <div class="input-box">
                 <i class="fa-solid fa-envelope"></i>
 
@@ -191,6 +196,7 @@
                     required>
             </div>
 
+            <!-- Password -->
             <div class="input-box">
                 <i class="fa-solid fa-lock"></i>
 
@@ -204,6 +210,7 @@
                     id="togglePassword"></i>
             </div>
 
+            <!-- Confirm Password -->
             <div class="input-box">
                 <i class="fa-solid fa-lock"></i>
 
@@ -214,12 +221,14 @@
                     required>
             </div>
 
+            <!-- Submit Button -->
             <button type="submit">
                 Create Account
             </button>
 
         </form>
 
+        <!-- Login Link -->
         <div class="bottom">
             Already have an account?
             <a href="login.html">Login</a>
@@ -228,12 +237,15 @@
     </div>
 
     <script>
+
+        // Get HTML elements
         const form = document.getElementById("registerForm");
         const password = document.getElementById("password");
         const confirmPassword = document.getElementById("confirmPassword");
         const toggle = document.getElementById("togglePassword");
 
-        // Show/Hide Password
+
+        // Show / Hide Password
         toggle.onclick = function () {
 
             if (password.type === "password") {
@@ -254,38 +266,55 @@
             }
         };
 
+
         // Registration Form
         form.addEventListener("submit", function (e) {
 
+            // Stop page from refreshing
             e.preventDefault();
 
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
+
+            // Get input values
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
             const pass = password.value;
             const confirm = confirmPassword.value;
 
-            // Password length validation
+
+            // Check password length
             if (pass.length < 6) {
+
                 alert("Password should be at least 6 characters.");
                 return;
             }
 
-            // Confirm password validation
+
+            // Check password confirmation
             if (pass !== confirm) {
+
                 alert("Passwords do not match.");
                 return;
             }
 
+
+            // Registration successful
             alert("Registration Successful!");
 
+            console.log("Name:", name);
+            console.log("Email:", email);
+
+
             /*
-            Later backend se connect karna:
+            Later, you can connect this form
+            to your backend using fetch/AJAX.
 
             fetch("http://localhost:5000/api/auth/register", {
                 method: "POST",
+
                 headers: {
                     "Content-Type": "application/json"
                 },
+
                 body: JSON.stringify({
                     name: name,
                     email: email,
@@ -293,7 +322,9 @@
                 })
             });
             */
+
         });
+
     </script>
 
 </body>
