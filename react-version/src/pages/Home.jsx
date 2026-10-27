@@ -1,71 +1,56 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./Home.css";   // we will create this CSS file next
+import { usePageTitle } from "../hooks";
+import "./Home.css";
+
+const FEATURES = [
+  "Skill Matching",
+  "Chat with Students",
+  "Booking Sessions",
+  "Reviews & Ratings",
+];
 
 function Home() {
+  usePageTitle("Skill Connect Portal");
+
+  const [showHeader, setShowHeader] = useState(false);
+  const [shownSections, setShownSections] = useState(0);
+  const [shownFeatures, setShownFeatures] = useState(0);
+  const [started, setStarted] = useState(false);
+  const [pop, setPop] = useState(false);
+
+  // Entrance animations (same timings as the original script.js)
   useEffect(() => {
-    // Header animation
-    const header = document.querySelector("header");
-    if (header) {
-      header.style.opacity = "0";
-      header.style.transform = "translateY(-50px)";
-
-      setTimeout(() => {
-        header.style.transition = "all 1s ease";
-        header.style.opacity = "1";
-        header.style.transform = "translateY(0)";
-      }, 200);
+    const timers = [];
+    timers.push(setTimeout(() => setShowHeader(true), 200));
+    for (let i = 0; i < 3; i++) {
+      timers.push(setTimeout(() => setShownSections(i + 1), 500 + i * 300));
     }
-
-    // Sections animation
-    const sections = document.querySelectorAll("section");
-    sections.forEach((section, index) => {
-      section.style.opacity = "0";
-      section.style.transform = "translateY(50px)";
-
-      setTimeout(() => {
-        section.style.transition = "all 0.8s ease";
-        section.style.opacity = "1";
-        section.style.transform = "translateY(0)";
-      }, 500 + index * 300);
-    });
-
-    // Features list animation
-    const features = document.querySelectorAll("#features li");
-    features.forEach((feature, index) => {
-      feature.style.opacity = "0";
-      feature.style.transform = "translateX(-50px)";
-
-      setTimeout(() => {
-        feature.style.transition = "all 0.5s ease";
-        feature.style.opacity = "1";
-        feature.style.transform = "translateX(0)";
-      }, 1200 + index * 300);
-    });
+    for (let i = 0; i < FEATURES.length; i++) {
+      timers.push(setTimeout(() => setShownFeatures(i + 1), 1200 + i * 300));
+    }
+    return () => timers.forEach(clearTimeout);
   }, []);
 
-  const handleGetStarted = (e) => {
-    const button = e.target;
-    button.innerText = "Let's Start! 🚀";
-    button.style.transform = "scale(1.2)";
-
-    setTimeout(() => {
-      button.style.transform = "scale(1)";
-    }, 300);
-
+  const handleGetStarted = () => {
+    setStarted(true);
+    setPop(true);
+    setTimeout(() => setPop(false), 300);
     alert("Welcome to Skill Connect! 🎓");
   };
 
+  const sectionClass = (i) => `fade-up${shownSections > i ? " show" : ""}`;
+
   return (
-    <>
-      <header>
+    <div className="home-page">
+      <header className={`fade-down${showHeader ? " show" : ""}`}>
         <h1>Skill Connect Portal</h1>
         <p>Exchange Skills. Learn Together. Grow Together.</p>
 
         <nav>
           <Link to="/">Home</Link> |{" "}
           <Link to="/find-skills">Find Skills</Link> |{" "}
-          <Link to="#">Teach</Link> |{" "}
+          <a href="#">Teach</a> |{" "}
           <Link to="/profile">Profile</Link> |{" "}
           <Link to="/login">Login</Link> |{" "}
           <Link to="/register">Register</Link>
@@ -74,7 +59,7 @@ function Home() {
         <hr />
       </header>
 
-      <section>
+      <section className={sectionClass(0)}>
         <h2>Learn New Skills by Exchanging Your Own</h2>
 
         <p>
@@ -91,27 +76,32 @@ function Home() {
           I want to learn <strong>Python</strong>.
         </p>
 
-        <button id="getStarted" onClick={handleGetStarted}>
-          Get Started
+        <button
+          id="getStarted"
+          className={pop ? "pop" : ""}
+          onClick={handleGetStarted}
+        >
+          {started ? "Let's Start! 🚀" : "Get Started"}
         </button>
       </section>
 
       <hr />
 
-      <section>
+      <section className={sectionClass(1)}>
         <h2>Our Features</h2>
 
         <ul id="features">
-          <li>Skill Matching</li>
-          <li>Chat with Students</li>
-          <li>Booking Sessions</li>
-          <li>Reviews & Ratings</li>
+          {FEATURES.map((f, i) => (
+            <li key={f} className={shownFeatures > i ? "show" : ""}>
+              {f}
+            </li>
+          ))}
         </ul>
       </section>
 
       <hr />
 
-      <section>
+      <section className={sectionClass(2)}>
         <h2>How It Works</h2>
 
         <ol>
@@ -128,7 +118,7 @@ function Home() {
       <footer>
         <p>&copy; 2026 Skill Connect. All Rights Reserved.</p>
       </footer>
-    </>
+    </div>
   );
 }
 
