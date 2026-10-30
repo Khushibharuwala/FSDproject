@@ -5,35 +5,29 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware
-app.use(express.json());
 app.use(cors());
+app.use(express.json()); 
 
-// 1. Direct MongoDB Atlas Connection String
-// ⚠️ Apni Atlas connection string ko niche "mongodb+srv://..." ki jagah paste karein
-const MONGODB_URI = "mongodb+srv://<username>:<password>@cluster0.xxxx.mongodb.net/my_database?retryWrites=true&w=majority";
+const MONGODB_URI="mongodb+srv://khushibharuwala_db_user:az3DnbDwWF96Thw4@cluster0.unhiop8.mongodb.net/SkillConnect?retryWrites=true&w=majority"
+;
 
 console.log("Connecting to MongoDB Atlas...");
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
-    console.log("✅ MongoDB Connected Successfully!");
+    console.log(" MongoDB Connected Successfully!");
   })
   .catch((err) => {
-    console.error("❌ Database Connection Error:");
-    console.error(err);
+    console.error("Database Connection Error:", err);
   });
 
-// 2. Import Auth Routes
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
-// 3. Test Route
 app.get('/', (req, res) => {
-  res.send("Backend Server is Running and Connected to Atlas!");
+  res.send("Backend Server is Running!");
 });
 
-// 4. Server Port Configuration
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(` Server is running on port ${PORT}`);
