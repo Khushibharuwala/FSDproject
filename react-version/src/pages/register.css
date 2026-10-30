@@ -1,0 +1,141 @@
+.register-page,
+.register-page * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6C63FF, #5DE0E6);
+}
+
+.register-page .card {
+  width: 420px;
+  background: #fff;
+  padding: 40px 35px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.register-page .card:hover {
+  transform: translateY(-5px);
+}
+
+.register-page .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #6C63FF;
+  margin-bottom: 20px;
+}
+
+.register-page .logo i {
+  font-size: 34px;
+}
+
+.register-page .logo h2 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.register-page h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.register-page p {
+  text-align: center;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+.register-page .input-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.register-page .input-box > i:first-child {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.register-page .input-box input {
+  width: 100%;
+  padding: 14px 45px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.register-page .input-box input:focus {
+  border-color: #6C63FF;
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.2);
+}
+
+.register-page .eye {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  cursor: pointer;
+}
+
+.register-page button {
+  width: 100%;
+  padding: 14px;
+  background: #6C63FF;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-page button:hover {
+  background: #5848e5;
+}
+
+.register-page .bottom {
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
+}
+
+.register-page .bottom a {
+  color: #6C63FF;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-page .bottom a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .register-page .card {
+    width: 90%;
+    padding: 30px 25px;
+  }
+  .register-page .logo h2 {
+    font-size: 26px;
+  }
+  .register-page h1 {
+    font-size: 26px;
+  }
+}
