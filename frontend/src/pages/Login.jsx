@@ -10,18 +10,29 @@ function Login() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const handleLogin = async (e) => {
+      e.preventDefault();
+  
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          alert("Login Successful! Welcome " + data.username);
+        } else {
+          alert(data.message || "Invalid Credentials");
+        }
+      } catch (err) {
+        console.error("Connection Error:", err);
+        alert("Could not connect to the backend server!");
+      }
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (password.length < 6) {
-      alert("Password should be at least 6 characters.");
-      return;
-    }
-
-    alert("Login Successful!");
-    console.log("Email:", email);
-  };
 
   const handleReset = () => {
     setEmail("");
