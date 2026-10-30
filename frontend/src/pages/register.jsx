@@ -12,24 +12,32 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password.length < 6) {
-      alert("Password should be at least 6 characters.");
-      return;
-    }
-
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      alert("Passwords do not match!");
       return;
     }
 
-    alert("Registration Successful!");
-    console.log("Name:", name.trim());
-    console.log("Email:", email.trim());
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: name, email, password })
+      });
 
-   
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Registration Successful!");
+      } else {
+        alert(data.message || "Registration failed");
+      }
+    } catch (err) {
+      console.error("Connection Error:", err);
+      alert("Could not connect to the backend server!");
+    }
   };
 
   const passwordType = showPassword ? "text" : "password";
